@@ -7,11 +7,12 @@ import DataTable from "react-data-table-component";
 import { TextField } from "./styles/styled.jsx";
 import { useApiCall } from "../Utils/api";
 
-const client = new W3CWebSocket("https://eagle.bitstreak.in/ws");
+const Home = () => {
+  const client = new W3CWebSocket("ws://eagle.bitstreak.in/ws");
 
-const FilterComponent = ({ filterText, onFilter, onClear }) => (
-  <>
-    {/* <TextField
+  const FilterComponent = ({ filterText, onFilter, onClear }) => (
+    <>
+      {/* <TextField
       id="search"
       type="text"
       placeholder="Filter By Name"
@@ -20,38 +21,37 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
       onChange={onFilter}
     />
     <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 mr-1 mb-1 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"  onClick={onClear}>X</button> */}
-    <div className="relative">
-      <div className="absolute top-4 left-3">
-        <i className="fa fa-search text-gray-400 z-20 hover:text-gray-500" />
+      <div className="relative">
+        <div className="absolute top-4 left-3">
+          <i className="fa fa-search text-gray-400 z-20 hover:text-gray-500" />
+        </div>
+        <input
+          type="text"
+          value={filterText}
+          onChange={onFilter}
+          className="h-14 w-96 pl-10 pr-20 rounded-lg z-0 focus:shadow focus:outline-none"
+          placeholder="Search Stock..."
+        />
+        <div className="absolute top-2 right-2">
+          <button
+            className="h-10 w-20 text-white rounded-lg bg-purple-500 hover:bg-purple-600"
+            onClick={onClear}>
+            Search
+          </button>
+        </div>
       </div>
-      <input
-        type="text"
-        value={filterText}
-        onChange={onFilter}
-        className="h-14 w-96 pl-10 pr-20 rounded-lg z-0 focus:shadow focus:outline-none"
-        placeholder="Search Stock..."
-      />
-      <div className="absolute top-2 right-2">
-        <button
-          className="h-10 w-20 text-white rounded-lg bg-purple-500 hover:bg-purple-600"
-          onClick={onClear}>
-          Search
-        </button>
-      </div>
-    </div>
-  </>
-);
+    </>
+  );
 
-function isJsonString(str) {
-  try {
-    JSON.parse(str);
-  } catch (e) {
-    return false;
+  function isJsonString(str) {
+    try {
+      JSON.parse(str);
+    } catch (e) {
+      return false;
+    }
+    return true;
   }
-  return true;
-}
 
-const Home = () => {
   const [ltp, setltp] = useState([]);
   const [ltp2, setltp2] = useState([]);
   const [tab2, setTab2] = useState([]);
@@ -291,54 +291,54 @@ const Home = () => {
 //   }
 // `
 
-function Table({ columns, data }) {
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable(
-    {
-      columns,
-      data,
-    },
-    useSortBy
-  );
+// function Table({ columns, data }) {
+//   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable(
+//     {
+//       columns,
+//       data,
+//     },
+//     useSortBy
+//   );
 
-  // We don't want to render all 2000 rows for this example, so cap
-  // it at 20 for this use case
-  // const firstPageRows = rows.slice(0, 20)
-  const firstPageRows = rows;
+//   // We don't want to render all 2000 rows for this example, so cap
+//   // it at 20 for this use case
+//   // const firstPageRows = rows.slice(0, 20)
+//   const firstPageRows = rows;
 
-  return (
-    <>
-      <table {...getTableProps()}>
-        <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                // Add the sorting props to control sorting. For this example
-                // we can add them into the header props
-                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                  {column.render("Header")}
-                  {/* Add a sort direction indicator */}
-                  <span>{column.isSorted ? (column.isSortedDesc ? " 🔽" : " 🔼") : ""}</span>
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {firstPageRows.map((row, i) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => {
-                  return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      <br />
-      {/* <div>Showing the first 20 results of {rows.length} rows</div> */}
-    </>
-  );
-}
-export default Home;
+//   return (
+//     <>
+//       <table {...getTableProps()}>
+//         <thead>
+//           {headerGroups.map((headerGroup) => (
+//             <tr {...headerGroup.getHeaderGroupProps()}>
+//               {headerGroup.headers.map((column) => (
+//                 // Add the sorting props to control sorting. For this example
+//                 // we can add them into the header props
+//                 <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+//                   {column.render("Header")}
+//                   {/* Add a sort direction indicator */}
+//                   <span>{column.isSorted ? (column.isSortedDesc ? " 🔽" : " 🔼") : ""}</span>
+//                 </th>
+//               ))}
+//             </tr>
+//           ))}
+//         </thead>
+//         <tbody {...getTableBodyProps()}>
+//           {firstPageRows.map((row, i) => {
+//             prepareRow(row);
+//             return (
+//               <tr {...row.getRowProps()}>
+//                 {row.cells.map((cell) => {
+//                   return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+//                 })}
+//               </tr>
+//             );
+//           })}
+//         </tbody>
+//       </table>
+//       <br />
+//       {/* <div>Showing the first 20 results of {rows.length} rows</div> */}
+//     </>
+//   );
+// }
+export { Home };

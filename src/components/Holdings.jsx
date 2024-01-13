@@ -43,20 +43,20 @@ const columns = [
     selector: (row) => parseInt(row["upldprc"]),
     sortable: true,
   },
-  {
-    name: "Total",
-    selector: (row) => parseInt(row["upldprc"]) * (parseInt(row["brkcolqty"]) || 0 + parseInt(row["npoadqty"]) || 0),
-    sortable: true,
-    conditionalCellStyles: [
-      {
-          when: row => row.urmtom < 0,
-          style: {
-              backgroundColor: 'rgba(185, 28, 28, 0.4)',
+  // {
+  //   name: "Total",
+  //   selector: (row) => parseInt(row["upldprc"]) * (parseInt(row["brkcolqty"]) || 0 + parseInt(row["npoadqty"]) || 0),
+  //   sortable: true,
+  //   conditionalCellStyles: [
+  //     {
+  //         when: row => row.urmtom < 0,
+  //         style: {
+  //             backgroundColor: 'rgba(185, 28, 28, 0.4)',
              
-          },
-      },
-    ],
-  },
+  //         },
+  //     },
+  //   ],
+  // },
   {
     name:"Buy/Sell",
     selector: (row)=>{
@@ -101,7 +101,7 @@ const columns = [
   // },
 ];
 
-export default function Positions() {
+const Holdings = () => {
   const sheetsQuery = useApiCall(
     ["positions"],
     "get",
@@ -111,13 +111,13 @@ export default function Positions() {
       cacheTime: 0,
     }
   );
-  console.log("🚀 ~ file: Holdings.js:95 ~ Positions ~ sheetsQuery:", sheetsQuery.data);
   // const [visible, { toggle }] = useDisclosure(false);
   const [filterText, setFilterText] = React.useState("");
   const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);
 
   const filteredItems = sheetsQuery?.data ?? [];
   const [totalPnl, settotalPnl] = useState(0);
+  console.log("🚀 ~ file: Holdings.js:95 ~ Positions ~ sheetsQuery:", filterText);
 
   
 
@@ -141,6 +141,7 @@ export default function Positions() {
         onClear={handleClear}
         filterText={filterText}
       />
+      // <></>
     );
   }, [filterText, resetPaginationToggle]);
 
@@ -152,10 +153,24 @@ export default function Positions() {
   //   );
   // }
 
+  if(sheetsQuery.isLoading){
+    return (
+      <div className="text-center mt-20">
+        <LoadingOverlay visible={true} overlayBlur={2} />
+      </div>
+    );
+  }
 
   return (
     <div className="m-2 flex flex-col items-center justify-center align-middle justify-items-center self-center place-items-center">
- 
+  {/* <TextField
+      id="search"
+      type="text"
+      placeholder="Filter By Name"
+      aria-label="Search Input"
+      value={filterText}
+      onChange={()=>{}}
+    /> */}
        <Button  color="cyan" className="bg-cyan-900" onClick={()=>{
         sheetsQuery.refetch();
       }}>
@@ -184,3 +199,5 @@ export default function Positions() {
     </div>
   );
 }
+
+export {Holdings};

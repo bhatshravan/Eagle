@@ -6,25 +6,6 @@ import { useApiCall } from "../Utils/api";
 import { Button, LoadingOverlay } from "@mantine/core";
 // import { useDisclosure } from "@mantine/hooks";
 
-const FilterComponent = ({ filterText, onFilter, onClear }) => (
-  <>
-    <TextField
-      id="search"
-      type="text"
-      placeholder="Filter By Name"
-      aria-label="Search Input"
-      value={filterText}
-      onChange={onFilter}
-    />
-    <button
-      type="button"
-      className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 mr-1 mb-1 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-      onClick={onClear}>
-      X
-    </button>
-  </>
-);
-
 const columns = [
   {
     name: "Symbol",
@@ -89,6 +70,26 @@ const columns = [
 ];
 
 export default function Positions() {
+  
+const FilterComponent = ({ filterText, onFilter, onClear }) => (
+  <>
+    <TextField
+      id="search"
+      type="text"
+      placeholder="Filter By Name"
+      aria-label="Search Input"
+      value={filterText}
+      onChange={onFilter}
+    />
+    <button
+      type="button"
+      className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 mr-1 mb-1 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+      onClick={onClear}>
+      X
+    </button>
+   </>
+ );
+
   const sheetsQuery = useApiCall(
     ["positions"],
     "get",
@@ -127,6 +128,7 @@ export default function Positions() {
         onClear={handleClear}
         filterText={filterText}
       />
+      // <></>
     );
   }, [filterText, resetPaginationToggle]);
 

@@ -2,18 +2,7 @@ import axios from "axios";
 
 import { useQuery } from "react-query";
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  useRouteMatch,
-  Link,
-  useHistory,
-} from "react-router-dom";
-
 export const API = axios.create({
-  // baseURL: process.env.REACT_APP_API_URL,
-  // baseURL: "http://localhost:8080",
   baseURL: "https://trade.bitstreak.in",
   timeout: 10000,
   headers: {
@@ -21,34 +10,6 @@ export const API = axios.create({
   },
 });
 
-// API.interceptors.response.use(
-//   (response) => response,
-//   (error) => {
-//     const status = error.response ? error.response.status : null;
-
-//     if (status === 401) {
-//       localStorage.removeItem("Auth");
-//       localStorage.removeItem("Profile");
-//       window.location.href = "/signin";
-//     }
-
-//     return Promise.reject(error);
-//   }
-// );
-// API.interceptors.request.use(
-//   (config) => {
-//     const token = localStorage.getItem("Auth");
-
-//     if (token) {
-//       config.headers.Authorization = `Bearer ${token}`;
-//     } else {
-//       delete API.defaults.headers.common.Authorization;
-//     }
-//     return config;
-//   },
-
-//   (error) => Promise.reject(error)
-// );
 
 export async function fetchData(method, url, data) {
   const { apiData } = await API({

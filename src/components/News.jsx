@@ -3,7 +3,7 @@ import { useApiCall } from "../Utils/api";
 import { Link } from "react-router-dom";
 import { Modal, Button, Group } from "@mantine/core";
 
-export default function News() {
+ const News = () =>{
   const [opened, setOpened] = useState(false);
   const [modalData, setModalData] = useState("");
   const newsQuery = useApiCall(
@@ -51,12 +51,13 @@ export default function News() {
          
         </div>
       </Modal>
-      <div className="container flex flex-col items-center justify-center">
+      <div className="container flex flex-col items-center justify-center max-w-[3200px]">
         <div className="col">
           {newsQuery.data &&
             newsQuery.data.articles.map((article) => (
-              <div className="row   items-center justify-center">
-                <div className="p-6 sm:w-4/6 lg:w-2/3 my-5 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+              // <center>
+              <div className="row   items-center justify-center flex">
+                <div className="p-6 sm:w-4/6 lg:w-2/3 my-5 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 flex flex-col justify-center" style={{justifyItems:"center",alignItems:"center"}}>
                   <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                     {article.title}
                   </h5>
@@ -83,9 +84,12 @@ export default function News() {
                   </Button> */}
                 </div>
               </div>
+              // </center>
             ))}
         </div>
       </div>
     </>
   );
 }
+
+export {News}
